@@ -14,10 +14,15 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.datastructs</groupId>
+            <groupId>org.mydatastructs</groupId>
             <artifactId>lazyarrays</artifactId>
-            <version>4.0</version>
+            <version>1.0</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
     </dependencies>
 </project>
