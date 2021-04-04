@@ -1,9 +1,12 @@
 package block_7.com.models;
 
+import block_7.com.enums.HenType;
+
 public class MoldovanHen extends Hen{
-    @Override
-    public int getCountOfEggsPerMonth() {
-        return 16;
+
+
+    public MoldovanHen(int countOfEggsPerMonth, HenType henType) {
+        super(countOfEggsPerMonth, henType);
     }
 
     @Override

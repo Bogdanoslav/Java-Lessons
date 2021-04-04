@@ -1,6 +1,8 @@
 package block_7.com;
 
-import block_7.com.models.*;
+import block_7.com.enums.HenType;
+import block_7.com.models.Hen;
+import block_7.com.services.Fabric;
 
 import java.util.Scanner;
 
@@ -9,26 +11,13 @@ public class HenTest {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Выберите расположение фермы (UKRAINE, MOLDOVA, BELARUSSIA, RUSSIA): ");
         String userAnsw = scanner.nextLine();
-        Farm farm = null;
+        Fabric fabric = new Fabric();
         try {
-            Farm.FarmType ft = Farm.FarmType.valueOf(userAnsw.toUpperCase());
-            switch (ft){
-                case MOLDOVA:
-                    farm = new MoldovanFarm();
-                    break;
-                case UKRAINE:
-                    farm = new UkrainianFarm();
-                    break;
-                case BELARUSSIA:
-                    farm = new BelarussianFarm();
-                    break;
-                case RUSSIA:
-                    farm = new RussianFarm();
-                    break;
-            }
-            System.out.println(farm.collectEggs());
+            HenType ft = HenType.valueOf(userAnsw.toUpperCase());
+            Hen hen = fabric.getHen(ft);
+            System.out.println(hen.getCountOfEggsPerMonth());
         } catch (IllegalArgumentException e){
-            System.out.println("Такого расположения фермы нет");
+            System.out.println(userAnsw + " - Такого расположения фермы нет");
         }
     }
 }
