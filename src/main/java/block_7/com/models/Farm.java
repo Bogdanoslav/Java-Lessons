@@ -5,7 +5,7 @@ public abstract class Farm {
         UKRAINE,
         MOLDOVA,
         BELARUSSIA,
-        RUSSIAN
+        RUSSIA
     }
     public String collectEggs(){
         IHen hen = createHen();

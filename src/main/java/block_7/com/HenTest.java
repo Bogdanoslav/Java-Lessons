@@ -22,13 +22,13 @@ public class HenTest {
                 case BELARUSSIA:
                     farm = new BelarussianFarm();
                     break;
-                case RUSSIAN:
+                case RUSSIA:
                     farm = new RussianFarm();
                     break;
             }
+            System.out.println(farm.collectEggs());
         } catch (IllegalArgumentException e){
             System.out.println("Такого расположения фермы нет");
         }
-        System.out.println(farm.collectEggs());
     }
 }

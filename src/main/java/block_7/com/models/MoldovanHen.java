@@ -8,6 +8,6 @@ public class MoldovanHen extends Hen{
 
     @Override
     public String getDescription() {
-        return null;
+        return super.getDescription() + " Моя страна - Молдова. Я несу " + getCountOfEggsPerMonth() + " яиц в месяц";
     }
 }
