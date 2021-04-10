@@ -1,0 +1,3 @@
+ url: jdbc:h2:~/user_management
+ username = sa
+ password = sa
