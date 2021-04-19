@@ -40,9 +40,10 @@ public class DButils {
     public static final String SQL_dropAllObject="DROP ALL OBJECTS";
 
     public void createTableUsers(){
-        try(Connection con = DBconnector.getConnection();
-            Statement statement = con.createStatement())
+        try
         {
+            Connection con = DBconnector.getConnection();
+            Statement statement = con.createStatement();
             statement.execute(SQL_createTableUsers);
         }
         catch (SQLException e)
@@ -51,9 +52,10 @@ public class DButils {
         }
     }
     public void createTableCompanies(){
-        try(Connection con = DBconnector.getConnection();
-            Statement statement = con.createStatement())
+        try
         {
+            Connection con = DBconnector.getConnection();
+            Statement statement = con.createStatement();
             statement.execute(SQL_createTableCompanies);
         }
         catch (SQLException e)
@@ -62,8 +64,9 @@ public class DButils {
         }
     }
     public void dropAllObjects(){
-        try (Connection con = DBconnector.getConnection();
-        Statement statement = con.createStatement()){
+        try {
+            Connection con = DBconnector.getConnection();
+            Statement statement = con.createStatement();
             statement.executeUpdate(SQL_dropAllObject);
         }catch (SQLException e){
             e.printStackTrace();

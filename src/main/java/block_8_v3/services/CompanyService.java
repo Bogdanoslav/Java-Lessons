@@ -23,4 +23,9 @@ public class CompanyService {
     public void save(Company company) {
         companyDao.save(company);
     }
+    public void saveAll(List<Company> companyList) {
+        for (Company company: companyList) {
+            companyDao.save(company);
+        }
+    }
 }

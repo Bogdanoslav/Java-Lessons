@@ -16,8 +16,9 @@ public class CompanyDao {
     public static final String SQL_deleteAll = "DELETE FROM COMPANIES";
 
     public static void deleteAll() {
-        try(Connection con = DBconnector.getConnection();
-            Statement statement = con.createStatement()){
+        try{
+            Connection con = DBconnector.getConnection();
+            Statement statement = con.createStatement();
             statement.executeUpdate(SQL_deleteAll);
 
         } catch (SQLException e){
@@ -26,8 +27,9 @@ public class CompanyDao {
     }
 
     public void delete(int id) {
-        try(Connection con = DBconnector.getConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_deleteCompany)) {
+        try {
+            Connection con = DBconnector.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_deleteCompany);
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -37,8 +39,9 @@ public class CompanyDao {
 
     public List<Company> findAll() {
         List<Company> companies = new ArrayList<>();
-        try(Connection con = DBconnector.getConnection();
-            Statement statement = con.createStatement()){
+        try{
+            Connection con = DBconnector.getConnection();
+            Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(SQL_selectAllCompanies);
             while (rs.next()){
                 companies.add(new Company(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4)));
@@ -51,12 +54,13 @@ public class CompanyDao {
     }
 
     public void save(Company company) {
-        try(Connection con = DBconnector.getConnection();
-            PreparedStatement statement = con.prepareStatement(SQL_insertCompany)){
-            statement.setString(1, company.getName());
-            statement.setString(2, company.getDomicile());
-            statement.setString(3, company.getPhoneNumber());
-            statement.executeUpdate();
+        try{
+            Connection con = DBconnector.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_insertCompany);
+            ps.setString(1, company.getName());
+            ps.setString(2, company.getDomicile());
+            ps.setString(3, company.getPhoneNumber());
+            ps.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         }

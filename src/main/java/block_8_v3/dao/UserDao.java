@@ -22,24 +22,26 @@ public class UserDao {
                                                             """;
 
     public void delete(int id) {
-        try(Connection con = DBconnector.getConnection();
-            PreparedStatement statement = con.prepareStatement(SQL_deleteUser)){
-            statement.setInt(1, id);
-            statement.executeUpdate();
+        try{
+            Connection con = DBconnector.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_deleteUser);
+            ps.setInt(1, id);
+            ps.executeUpdate();
 
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
     public void save(User user) {
-        try(Connection con = DBconnector.getConnection();
-            PreparedStatement statement = con.prepareStatement(SQL_insertUser)){
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getGender());
-            statement.setInt(5, user.getCompanyId());
-            statement.executeUpdate();
+        try{
+            Connection con = DBconnector.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_insertUser);
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getGender());
+            ps.setInt(5, user.getCompanyId());
+            ps.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -47,8 +49,9 @@ public class UserDao {
 
    public User findById(int id) {
         User user = null;
-        try(Connection con = DBconnector.getConnection();
-            PreparedStatement ps = con.prepareStatement(SQL_selectUser)){
+        try{
+            Connection con = DBconnector.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_selectUser);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -63,8 +66,9 @@ public class UserDao {
 
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        try(Connection con = DBconnector.getConnection();
-            Statement statement = con.createStatement()){
+        try{
+            Connection con = DBconnector.getConnection();
+            Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(SQL_selectAllUsers);
             while (rs.next()){
                 users.add(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6)));
@@ -77,8 +81,9 @@ public class UserDao {
     }
 
     public void deleteAll() {
-        try(Connection con = DBconnector.getConnection();
-            Statement statement = con.createStatement()){
+        try{
+            Connection con = DBconnector.getConnection();
+            Statement statement = con.createStatement();
             statement.executeUpdate(SQL_deleteAll);
 
         } catch (SQLException e){

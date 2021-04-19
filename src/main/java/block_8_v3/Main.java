@@ -24,7 +24,6 @@ public class Main {
                                     """;
 
     public static void main(String[] args) {
-    //<---- region Setting DB --->
         DButils dButils = new DButils();
         UserService userService = new UserService();
         CompanyService companyService = new CompanyService();
@@ -36,79 +35,85 @@ public class Main {
 
         List<String[]> userMock = csvManager.read(userMockUrl);
         List<String[]> companyMock = csvManager.read(companyMockUrl);
-        List<User> userList = new ArrayList<>();
-        List<Company> companyList = new ArrayList<>();
+        List<User> userList = mockToListUsers(userMock);
+        List<Company> companyList = mockToListCompanies(companyMock);
+        companyService.saveAll(companyList);
+        userService.saveAll(userList);
 
-        for (int i = 1; i < userMock.size(); i++) {
-            String[] row = userMock.get(i);
-            userList.add(new User(row[0],row[1],row[2],row[3],Integer.parseInt(row[4])));
-        }
-        for (int i = 1; i < companyMock.size(); i++) {
-            String[] row = companyMock.get(i);
-            companyList.add(new Company(row[0],row[1],row[2]));
-        }
-        for (Company value : companyList) {
-            companyService.save(value);
-        }
-        for (User value : userList) {
-            userService.save(value);
-        }
-    //<--- regionend Setting DB --->
-        User user;
-        int opt;
-        int id;
+        int choice;
         DButils.MenuOptions optEnum;
         Scanner scanner = new Scanner(System.in);
         do {
             System.out.println(menu);
             System.out.print("Введите номер команды: ");
-            opt = scanner.nextInt();
-            switch (opt){
-                case 1 -> optEnum = DButils.MenuOptions.FIND_USER;
-                case 2 -> optEnum = DButils.MenuOptions.FIND_ALL_USERS;
-                case 3 -> optEnum = DButils.MenuOptions.FIND_ALL_COMPANIES;
-                case 4 -> optEnum = DButils.MenuOptions.DELETE_USER_BY_ID;
-                case 5 -> optEnum = DButils.MenuOptions.DELETE_COMPANY_BY_ID;
-                case 6 -> optEnum = DButils.MenuOptions.EXIT;
-                default -> optEnum = DButils.MenuOptions.UNKNOWN;
-            }
+            choice = scanner.nextInt();
+            optEnum = getMenuOption(choice);
             switch (optEnum){
                 case FIND_USER ->{
-                        System.out.print("id: ");
-                        id = scanner.nextInt();
-                        user = userService.findUser(id);
-                        if(user!=null)
-                            System.out.println("Найденный юзер: " + user);
-                        else
-                            System.out.println("Юзер не найден");
+                    userService.findUser(askId());
                 }
                 case FIND_ALL_USERS -> {
-                    userList = userService.findAllUsers();
-                    for (User u: userList) {
-                        System.out.println(u);
-                    }
+                    printUsers(userService.findAllUsers());
                 }
                 case FIND_ALL_COMPANIES -> {
-                    companyList = companyService.findAllCompanies();
-                    for (Company company: companyList) {
-                        System.out.println(company);
-                    }
+                    printCompanies(companyService.findAllCompanies());
                 }
                 case DELETE_USER_BY_ID -> {
-                    System.out.print("id: ");
-                    id = scanner.nextInt();
-                    userService.deleteUser(id);
+                    userService.deleteUser(askId());
                 }
                 case DELETE_COMPANY_BY_ID -> {
-                    System.out.print("id: ");
-                    id = scanner.nextInt();
-                    companyService.deleteCompany(id);
+                    companyService.deleteCompany(askId());
                 }
                 case UNKNOWN ->
                     System.out.println("Неизвестная команда");
                 case EXIT ->
                     System.out.println("Программа Завершена");
             }
-        }while (opt!=6);
+        }while (choice!=6);
+    }
+    public static int askId(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("id: ");
+        int id = scanner.nextInt();
+        return id;
+    }
+    public static void printCompanies(List<Company> companyList){
+        for (Company company: companyList) {
+            System.out.println(company);
+        }
+    }
+    public static void printUsers(List<User> userList){
+        for (User user: userList) {
+            System.out.println(user);
+        }
+    }
+    public static DButils.MenuOptions getMenuOption(int choice){
+        DButils.MenuOptions optEnum;
+        switch (choice){
+            case 1 -> optEnum = DButils.MenuOptions.FIND_USER;
+            case 2 -> optEnum = DButils.MenuOptions.FIND_ALL_USERS;
+            case 3 -> optEnum = DButils.MenuOptions.FIND_ALL_COMPANIES;
+            case 4 -> optEnum = DButils.MenuOptions.DELETE_USER_BY_ID;
+            case 5 -> optEnum = DButils.MenuOptions.DELETE_COMPANY_BY_ID;
+            case 6 -> optEnum = DButils.MenuOptions.EXIT;
+            default -> optEnum = DButils.MenuOptions.UNKNOWN;
+        }
+        return optEnum;
+    }
+    public static List<Company> mockToListCompanies(List<String[]> companyMock){
+        List<Company> companyList = new ArrayList<>();
+        for (int i = 1; i < companyMock.size(); i++) {
+            String[] row = companyMock.get(i);
+            companyList.add(new Company(row[0],row[1],row[2]));
+        }
+        return companyList;
+    }
+    public static List<User> mockToListUsers(List<String[]> userMock){
+        List<User> userList = new ArrayList<>();
+        for (int i = 1; i < userMock.size(); i++) {
+            String[] row = userMock.get(i);
+            userList.add(new User(row[0],row[1],row[2],row[3],Integer.parseInt(row[4])));
+        }
+        return userList;
     }
 }
