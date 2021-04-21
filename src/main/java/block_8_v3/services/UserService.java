@@ -4,13 +4,16 @@ import block_8_v3.dao.UserDao;
 import block_8_v3.models.Company;
 import block_8_v3.models.User;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor
+
 public class UserService {
-    private UserDao userDao = new UserDao();
+    private UserDao userDao;
+
+    public UserService() {
+        this.userDao = new UserDao();
+    }
 
     public User findUser(int id) {
         User user = userDao.findById(id);

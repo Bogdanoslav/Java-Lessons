@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyDao {
-    public static final String SQL_selectAllCompanies= "SELECT * FROM COMPANIES";
-    public static final String SQL_deleteCompany = "DELETE FROM COMPANIES WHERE id = ?";
-    public static final String SQL_insertCompany = """
+    private static final String SQL_selectAllCompanies= "SELECT * FROM COMPANIES";
+    private static final String SQL_deleteCompany = "DELETE FROM COMPANIES WHERE id = ?";
+    private static final String SQL_insertCompany = """
                                         INSERT INTO companies (name, domicile, phone_number) 
                                         Values (?, ?, ?)
                                       """;
-    public static final String SQL_deleteAll = "DELETE FROM COMPANIES";
+    private static final String SQL_deleteAll = "DELETE FROM COMPANIES";
 
     public static void deleteAll() {
         try{

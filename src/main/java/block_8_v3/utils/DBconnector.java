@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DBconnector {
-        static Connection connection;
-        static String url = "jdbc:h2:~/user_management;AUTO_SERVER=TRUE";
-        static String username = "sa";
-        static String password = "sa";
+        private static Connection connection;
+        private static String url = "jdbc:h2:~/user_management;AUTO_SERVER=TRUE";
+        private static String username = "sa";
+        private static String password = "sa";
 
         private  DBconnector(){
 

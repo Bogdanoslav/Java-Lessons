@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static final String userMockUrl = "src/main/java/block_8/resources/userMock.csv";
-    public static final String companyMockUrl = "src/main/java/block_8/resources/companyMock.csv";
-    public static final String menu = """
+    private static final String userMockUrl = "src/main/java/block_8/resources/userMock.csv";
+    private static final String companyMockUrl = "src/main/java/block_8/resources/companyMock.csv";
+    private static final String menu = """
                                     \t\t<--- Управление БД --->
                                     \t1) Найти юзера по id
                                     \t2) Вывести всех юзеров
@@ -28,15 +28,19 @@ public class Main {
         UserService userService = new UserService();
         CompanyService companyService = new CompanyService();
         CSVManager csvManager = new CSVManager();
+        List<String[]> userMock;
+        List<String[]> companyMock;
+        List<User> userList;
+        List<Company> companyList;
 
         dButils.dropAllObjects();
         dButils.createTableCompanies();
         dButils.createTableUsers();
 
-        List<String[]> userMock = csvManager.read(userMockUrl);
-        List<String[]> companyMock = csvManager.read(companyMockUrl);
-        List<User> userList = mockToListUsers(userMock);
-        List<Company> companyList = mockToListCompanies(companyMock);
+        userMock = csvManager.read(userMockUrl);
+        companyMock = csvManager.read(companyMockUrl);
+        userList = mockToListUsers(userMock);
+        companyList = mockToListCompanies(companyMock);
         companyService.saveAll(companyList);
         userService.saveAll(userList);
 
@@ -50,19 +54,24 @@ public class Main {
             optEnum = getMenuOption(choice);
             switch (optEnum){
                 case FIND_USER ->{
-                    userService.findUser(askId());
+                    int id = askId();
+                    userService.findUser(id);
                 }
                 case FIND_ALL_USERS -> {
-                    printUsers(userService.findAllUsers());
+                    userList = userService.findAllUsers();
+                    printUsers(userList);
                 }
                 case FIND_ALL_COMPANIES -> {
-                    printCompanies(companyService.findAllCompanies());
+                    companyList = companyService.findAllCompanies();
+                    printCompanies(companyList);
                 }
                 case DELETE_USER_BY_ID -> {
-                    userService.deleteUser(askId());
+                    int id = askId();
+                    userService.deleteUser(id);
                 }
                 case DELETE_COMPANY_BY_ID -> {
-                    companyService.deleteCompany(askId());
+                    int id = askId();
+                    companyService.deleteCompany(id);
                 }
                 case UNKNOWN ->
                     System.out.println("Неизвестная команда");
@@ -71,23 +80,23 @@ public class Main {
             }
         }while (choice!=6);
     }
-    public static int askId(){
+    private static int askId(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("id: ");
         int id = scanner.nextInt();
         return id;
     }
-    public static void printCompanies(List<Company> companyList){
+    private static void printCompanies(List<Company> companyList){
         for (Company company: companyList) {
             System.out.println(company);
         }
     }
-    public static void printUsers(List<User> userList){
+    private static void printUsers(List<User> userList){
         for (User user: userList) {
             System.out.println(user);
         }
     }
-    public static DButils.MenuOptions getMenuOption(int choice){
+    private static DButils.MenuOptions getMenuOption(int choice){
         DButils.MenuOptions optEnum;
         switch (choice){
             case 1 -> optEnum = DButils.MenuOptions.FIND_USER;
@@ -100,7 +109,7 @@ public class Main {
         }
         return optEnum;
     }
-    public static List<Company> mockToListCompanies(List<String[]> companyMock){
+    private static List<Company> mockToListCompanies(List<String[]> companyMock){
         List<Company> companyList = new ArrayList<>();
         for (int i = 1; i < companyMock.size(); i++) {
             String[] row = companyMock.get(i);
@@ -108,7 +117,7 @@ public class Main {
         }
         return companyList;
     }
-    public static List<User> mockToListUsers(List<String[]> userMock){
+    private static List<User> mockToListUsers(List<String[]> userMock){
         List<User> userList = new ArrayList<>();
         for (int i = 1; i < userMock.size(); i++) {
             String[] row = userMock.get(i);

@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    public static final String SQL_insertUser = """
+    private static final String SQL_insertUser = """
                                                     INSERT INTO users (first_name, last_name, email, gender, company_id)
                                                     Values (?, ?, ?, ?,  SELECT id from companies WHERE id=?)
                                                 """;
-    public static final String SQL_deleteUser = "DELETE FROM USERS WHERE ID = ?";
-    public static final String SQL_deleteAll = "DELETE FROM USERS";
-    public static final String SQL_selectUser = "SELECT * FROM USERS WHERE ID = ?";
-    public static final String SQL_selectAllUsers = "SELECT * FROM USERS";
-    public static final String SQL_SelectAllUsersCompanies = """
+    private static final String SQL_deleteUser = "DELETE FROM USERS WHERE ID = ?";
+    private static final String SQL_deleteAll = "DELETE FROM USERS";
+    private static final String SQL_selectUser = "SELECT * FROM USERS WHERE ID = ?";
+    private static final String SQL_selectAllUsers = "SELECT * FROM USERS";
+    private static final String SQL_SelectAllUsersCompanies = """
                                                                 SELECT users.id, users.first_name, users.last_name, companies.name
                                                                 FROM users
                                                                 JOIN companies ON users.company_id=companies.id;

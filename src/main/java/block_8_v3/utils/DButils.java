@@ -19,7 +19,7 @@ public class DButils {
         UNKNOWN,
         EXIT
     }
-    public static final String SQL_createTableUsers =   """
+    private static final String SQL_createTableUsers =   """
                                     CREATE TABLE IF NOT EXISTS users(
                                     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                     first_name varchar(35) NOT NULL,
@@ -30,14 +30,14 @@ public class DButils {
                                     FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE SET NULL)
                                     """;
 
-    public static final String SQL_createTableCompanies =   """
+    private static final String SQL_createTableCompanies =   """
                                         CREATE TABLE IF NOT EXISTS companies(
                                         id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                         name varchar(35) NOT NULL,
                                         domicile varchar(35) NOT NULL,
                                         phone_number varchar(15) NOT NULL)
                                         """;
-    public static final String SQL_dropAllObject="DROP ALL OBJECTS";
+    private static final String SQL_dropAllObject="DROP ALL OBJECTS";
 
     public void createTableUsers(){
         try

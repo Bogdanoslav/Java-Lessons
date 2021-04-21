@@ -9,10 +9,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Company {
     //name,domicile,phone_number
-    int id;
-    String name;
-    String domicile;
-    String phoneNumber;
+    private int id;
+    private String name;
+    private String domicile;
+    private String phoneNumber;
 
     public Company(int id, String name, String domicile, String phoneNumber) {
         this.id = id;

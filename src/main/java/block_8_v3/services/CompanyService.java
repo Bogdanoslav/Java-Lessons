@@ -8,7 +8,11 @@ import block_8_v3.models.User;
 import java.util.List;
 
 public class CompanyService {
-    private CompanyDao companyDao = new CompanyDao();
+    private CompanyDao companyDao;
+
+    public CompanyService() {
+        this.companyDao  = new CompanyDao();
+    }
 
     public void deleteCompany(int id) {
         companyDao.delete(id);

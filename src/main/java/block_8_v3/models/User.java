@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class User {
     //first_name,last_name,email,gender,CompanyId
-    int id;
-    String firstName;
-    String lastName;
-    String email;
-    String gender;
-    int companyId;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String gender;
+    private int companyId;
 
     public User(int id, String firstName, String lastName, String email, String gender, int companyId) {
         this.id = id;
