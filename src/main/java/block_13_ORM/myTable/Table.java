@@ -1,4 +1,4 @@
-package block_13_ORM.MyTable;
+package block_13_ORM.myTable;
 
 import java.util.List;
 

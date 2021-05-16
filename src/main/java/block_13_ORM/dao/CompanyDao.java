@@ -1,8 +1,8 @@
 package block_13_ORM.dao;
 
-import block_13_ORM.DaoI;
+import block_13_ORM.interfaces.DaoI;
 import block_13_ORM.models.Company;
-import block_13_ORM.utils.DBconnector;
+import block_13_ORM.utils.DBConnector;
 
 import java.sql.*;
 import java.util.List;
@@ -13,7 +13,7 @@ public class CompanyDao implements DaoI<Company> {
     @Override
     public void save(Company company) {
         try {
-            Connection con = DBconnector.getConnection();
+            Connection con = DBConnector.getConnection();
             PreparedStatement ps = con.prepareStatement(SAVE_COMPANY_SQL);
             ps.setString(1,company.getName());
             ps.setString(2,company.getPhone());
@@ -34,7 +34,7 @@ public class CompanyDao implements DaoI<Company> {
     @Override
     public ResultSet getAll() {
         try {
-            Connection con = DBconnector.getConnection();
+            Connection con = DBConnector.getConnection();
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(SELECT_COMPANIES_SQL);
             return rs;

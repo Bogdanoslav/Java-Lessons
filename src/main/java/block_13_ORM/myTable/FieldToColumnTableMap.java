@@ -1,4 +1,4 @@
-package block_13_ORM.MyTable;
+package block_13_ORM.myTable;
 
 import java.lang.reflect.Field;
 
@@ -10,8 +10,8 @@ public class FieldToColumnTableMap {
 
     public FieldToColumnTableMap(Field field) {
         this.field = field;
-        column = MyOrmAnalyzer.getClassFieldsNames(field);
-        sqlType = MyOrmAnalyzer.getSqlType(field);
+        column = OrmAnalyzer.getClassFieldsNames(field);
+        sqlType = OrmAnalyzer.getSqlType(field);
     }
 
     public Field getField() {
@@ -26,9 +26,6 @@ public class FieldToColumnTableMap {
         return column;
     }
 
-    public void setColumn(String column) {
-        this.column = column;
-    }
     public Class getType(){
         if(sqlType.equals("int")){
             return Integer.class;
@@ -38,6 +35,4 @@ public class FieldToColumnTableMap {
         return field.getType();
     }
     public String getSqlType() { return sqlType; }
-
-    public void setSqlType(String sqlType) { this.sqlType = sqlType; }
 }

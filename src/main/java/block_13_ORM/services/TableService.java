@@ -1,6 +1,6 @@
 package block_13_ORM.services;
 
-import block_13_ORM.MyTable.Table;
+import block_13_ORM.myTable.Table;
 import block_13_ORM.dao.TableDao;
 
 public class TableService {

@@ -1,7 +1,7 @@
 package block_13_ORM;
-import block_13_ORM.MyTable.FieldToColumnTableMap;
-import block_13_ORM.MyTable.MyOrmAnalyzer;
-import block_13_ORM.MyTable.Table;
+import block_13_ORM.myTable.ClassToTableMapper;
+import block_13_ORM.myTable.FieldToColumnTableMap;
+import block_13_ORM.myTable.Table;
 import block_13_ORM.annotations.MyTable;
 import block_13_ORM.models.Company;
 import block_13_ORM.models.User;
@@ -28,30 +28,18 @@ public class Main {
         UserService userService = new UserService();
         CompanyService companyService = new CompanyService();
         TableService tableService = new TableService();
-        List<FieldToColumnTableMap> colfieldMaps = new ArrayList<>();
         CSVManager csvManager = new CSVManager();
-        String tableName;
-        Field[] fields;
-        List<User> users;
-        List<Company> companies;
-        List<String[]> userMock;
-        List<String[]> companyMock;
 
-        userMock = csvManager.read(userMockUrl);
-        users = dataToUserList(userMock);
-
-        companyMock = csvManager.read(companyMockUrl);
-        companies = dataToCompanyList(companyMock);
+        List<String[]> userMock = csvManager.read(userMockUrl);
+        List<String[]> companyMock = csvManager.read(companyMockUrl);
+        List<User> users = dataToUserList(userMock);
+        List<Company> companies = dataToCompanyList(companyMock);
 
         ClassGetter classGetter = new ClassGetter("block_13_ORM");
         Set<Class<?>> tableClasses = classGetter.getClasses(MyTable.class);
 
         for (Class clazz: tableClasses) {
-            tableName = MyOrmAnalyzer.getTableName(clazz);
-            fields = MyOrmAnalyzer.getClassFields(clazz);
-            colfieldMaps = MyOrmAnalyzer.getColfieldMaps(fields);
-
-            Table table = new Table(tableName, colfieldMaps);
+            Table table = ClassToTableMapper.mapClassToTable(clazz);
             tableService.dropTable(table);
             tableService.createTable(table);
         }

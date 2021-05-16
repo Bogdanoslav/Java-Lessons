@@ -5,9 +5,9 @@ import block_13_ORM.annotations.MyTable;
 
 @MyTable(name = "Users", description = "User data table")
 public class User {
-    @MyColumn(name = "Name")
+    @MyColumn(name = "name")
     private String name;
-    @MyColumn(name = "Age")
+    @MyColumn(name = "age")
     private int age;
 
     public User(String name, int age) {
@@ -18,15 +18,6 @@ public class User {
     public User() {
 
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                '}';
-    }
-
     public String getName() {
         return name;
     }
@@ -42,4 +33,13 @@ public class User {
     public void setAge(int age) {
         this.age = age;
     }
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+
 }
