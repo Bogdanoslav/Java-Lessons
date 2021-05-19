@@ -1,12 +1,12 @@
 package block_13_ORM.dao;
 
+import block_13_ORM.exceptions.SaveNullException;
 import block_13_ORM.interfaces.DaoI;
 import block_13_ORM.models.User;
 import block_13_ORM.utils.DBConnector;
 
 import java.sql.*;
 import java.util.List;
-import java.util.Optional;
 
 public class UserDao implements DaoI<User> {
     private final static String SAVE_USER_SQL = "INSERT INTO USERS (Name, Age) VALUES(?,?)";
@@ -15,8 +15,12 @@ public class UserDao implements DaoI<User> {
     public void save(User user) throws SQLException {
             Connection con = DBConnector.getConnection();
             PreparedStatement ps = con.prepareStatement(SAVE_USER_SQL);
-            ps.setString(1,user.getName());
-            ps.setInt(2,user.getAge());
+            try{
+                ps.setString(1,user.getName());
+                ps.setInt(2,user.getAge());
+            } catch (Exception e){
+                throw new SaveNullException("Cannot save null object to database");
+            }
             ps.executeUpdate();
     }
     @Override
@@ -29,7 +33,6 @@ public class UserDao implements DaoI<User> {
     public ResultSet getAll() throws SQLException {
             Connection con = DBConnector.getConnection();
             Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(SELECT_USERS_SQL);
-            return rs;
+            return statement.executeQuery(SELECT_USERS_SQL);
     }
 }

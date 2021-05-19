@@ -1,6 +1,6 @@
 package block_13_ORM;
+import block_13_ORM.exceptions.ReadCsvException;
 import block_13_ORM.myTable.ClassToTableMapper;
-import block_13_ORM.myTable.FieldToColumnTableMap;
 import block_13_ORM.myTable.Table;
 import block_13_ORM.annotations.MyTable;
 import block_13_ORM.models.Company;
@@ -11,8 +11,6 @@ import block_13_ORM.services.UserService;
 import block_13_ORM.utils.CSVManager;
 import block_13_ORM.utils.ClassGetter;
 import block_13_ORM.utils.ResultSetObjectMapper;
-
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,17 +19,28 @@ import java.util.List;
 import java.util.Set;
 
 public class Main {
-    private static final String userMockUrl = "src/main/java/block_13_ORM/resources/user_data.csv";
-    private static final String companyMockUrl = "src/main/java/block_13_ORM/resources/company_data.csv";
+    private static final String userMockUrl = "src/main/java/block_13_ORM/resources/user_data.cslv";
+    private static final String companyMockUrl = "src/main/java/block_13_ORM/resources/company_data.clsv";
 
     public static void main(String[] args) throws SQLException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InstantiationException, InvocationTargetException {
         UserService userService = new UserService();
         CompanyService companyService = new CompanyService();
         TableService tableService = new TableService();
         CSVManager csvManager = new CSVManager();
-
-        List<String[]> userMock = csvManager.read(userMockUrl);
-        List<String[]> companyMock = csvManager.read(companyMockUrl);
+        List<String[]> userMock;
+        List<String[]> companyMock;
+        try {
+            userMock = csvManager.read(userMockUrl);
+        } catch (ReadCsvException e){
+            userMock = new ArrayList<>();
+            userMock.add(new String[] {"Peter", "103"});
+        }
+        try {
+            companyMock = csvManager.read(companyMockUrl);
+        } catch (ReadCsvException e){
+            companyMock = new ArrayList<>();
+            companyMock.add(new String[] {"Snaptags", "496-655-3842"});
+        }
         List<User> users = dataToUserList(userMock);
         List<Company> companies = dataToCompanyList(companyMock);
 
@@ -46,6 +55,9 @@ public class Main {
 
         userService.saveAll(users);
         companyService.saveAll(companies);
+
+        //SaveNullException
+        //userService.save(null);
 
         ResultSet rs = userService.getAll();
         users = (List<User>)(Object) ResultSetObjectMapper.mapResultSet(rs,User.class);
@@ -76,12 +88,5 @@ public class Main {
             System.out.println(obj);
         }
     }
-    public static List<FieldToColumnTableMap>fillColfieldMap(Field[] fields){
-        List<FieldToColumnTableMap> fieldToColumnMaps = new ArrayList<>();
-        for (Field f: fields) {
-            FieldToColumnTableMap ftctm= new FieldToColumnTableMap(f);
-            fieldToColumnMaps.add(ftctm);
-        }
-        return  fieldToColumnMaps;
-    }
+
 }
