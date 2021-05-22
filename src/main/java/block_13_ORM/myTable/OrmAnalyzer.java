@@ -8,24 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrmAnalyzer {
-    public static String getTableName(Class clazz){
+    public static String getTableName(Class clazz) {
         MyTable myTable = (MyTable) clazz.getAnnotation(MyTable.class);
         return myTable.name();
     }
-    public static Field[] getClassFields(Class clazz){
+
+    public static Field[] getClassFields(Class clazz) {
         return clazz.getDeclaredFields();
     }
-    public static String getClassFieldsNames(Field field){
+
+    public static String getClassFieldsNames(Field field) {
         return field.getAnnotation(MyColumn.class).name();
     }
-    public static String getStringType(Field field){
+
+    public static String getStringType(Field field) {
         String[] typeSplit = field.getType().getTypeName().split("\\.");
-        return typeSplit[typeSplit.length-1];
+        return typeSplit[typeSplit.length - 1];
     }
-    public static String getSqlType(Field field){
+
+    public static String getSqlType(Field field) {
         String sqlType = "";
         String javaType = getStringType(field);
-        switch (javaType){
+        switch (javaType) {
             case "String":
                 sqlType = "varchar(255)";
                 break;
@@ -38,10 +42,11 @@ public class OrmAnalyzer {
         }
         return sqlType;
     }
-    public static List<FieldToColumnTableMap> getColfieldMaps(Field[] fields){
+
+    public static List<FieldToColumnTableMap> getColfieldMaps(Field[] fields) {
         List<FieldToColumnTableMap> fieldToColumnMaps = new ArrayList<>();
-        for (Field f: fields) {
-            FieldToColumnTableMap ftctm= new FieldToColumnTableMap(f);
+        for (Field f : fields) {
+            FieldToColumnTableMap ftctm = new FieldToColumnTableMap(f);
             fieldToColumnMaps.add(ftctm);
         }
         return fieldToColumnMaps;

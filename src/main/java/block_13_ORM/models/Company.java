@@ -3,7 +3,7 @@ package block_13_ORM.models;
 import block_13_ORM.annotations.MyColumn;
 import block_13_ORM.annotations.MyTable;
 
-@MyTable(name = "Companies",description = "Companies data table")
+@MyTable(name = "Companies", description = "Companies data table")
 public class Company {
     @MyColumn(name = "name")
     private String name;
@@ -14,9 +14,11 @@ public class Company {
         this.name = name;
         this.phone = phone;
     }
-    public Company(){
+
+    public Company() {
 
     }
+
     public String getName() {
         return name;
     }

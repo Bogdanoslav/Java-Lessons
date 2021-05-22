@@ -9,24 +9,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class TableDao {
-    public void create(Table table) {
-        try {
+    public void create(Table table) throws SQLException {
             Connection con = DBConnector.getConnection();
             Statement statement = con.createStatement();
             TableSqlCreator tableSqlCreator = new TableSqlCreator(table);
             statement.executeUpdate(tableSqlCreator.createNewTableSql());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
-    public void drop(Table table){
-        try{
+
+    public void drop(Table table) throws SQLException {
             Connection con = DBConnector.getConnection();
             Statement statement = con.createStatement();
             TableSqlCreator tableSqlCreator = new TableSqlCreator(table);
             statement.executeUpdate(tableSqlCreator.createDropTableSql());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
 }

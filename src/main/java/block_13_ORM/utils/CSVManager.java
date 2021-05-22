@@ -13,7 +13,7 @@ public class CSVManager {
         try (CSVReader csvR= new CSVReader(new FileReader(url))){
              dataList = csvR.readAll();
         } catch (IOException e){
-            throw new ReadCsvException("Error while reading CSV");
+            throw new ReadCsvException("Error while reading CSV " + url, e);
         }
         return dataList;
     }

@@ -26,13 +26,16 @@ public class FieldToColumnTableMap {
         return column;
     }
 
-    public Class getType(){
-        if(sqlType.equals("int")){
+    public Class getType() {
+        if (sqlType.equals("int")) {
             return Integer.class;
-        } else if(sqlType.equals("double")){
+        } else if (sqlType.equals("double")) {
             return Double.class;
         }
         return field.getType();
     }
-    public String getSqlType() { return sqlType; }
+
+    public String getSqlType() {
+        return sqlType;
+    }
 }

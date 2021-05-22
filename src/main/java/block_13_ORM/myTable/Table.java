@@ -7,7 +7,6 @@ public class Table {
     private List<FieldToColumnTableMap> tableColumnMap;
 
 
-
     public Table(String tableName, List<FieldToColumnTableMap> tableColumnMap) {
         this.tableName = tableName;
         this.tableColumnMap = tableColumnMap;
