@@ -1,6 +1,5 @@
 package block_13_ORM.dao;
 
-import block_13_ORM.exceptions.SaveNullException;
 import block_13_ORM.interfaces.DaoI;
 import block_13_ORM.models.User;
 import block_13_ORM.utils.DBConnector;
